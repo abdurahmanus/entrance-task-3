@@ -1,0 +1,35 @@
+{
+  "name": "entrance-task-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server.js",
+    "client": "node start-client.js",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdurahmanus/entrance-task-3.git"
+  },
+  "author": "Abdurahmanus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdurahmanus/entrance-task-3/issues"
+  },
+  "homepage": "https://github.com/abdurahmanus/entrance-task-3#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.12.3",
+    "graphql-date": "^1.0.3",
+    "graphql-tools": "^2.19.0",
+    "sequelize": "^4.32.2",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.14.11"
+  }
+}
