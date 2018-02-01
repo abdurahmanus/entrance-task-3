@@ -34,17 +34,7 @@ const makeHoursArray = (startTime, endTime) => {
 };
 
 const calcFreeTimes = (startTime, endTime, eventsTimes) => {
-  return eventsTimes.reduce(
-    (freeTimes, eventTime) => {
-      return freeTimes;
-    },
-    [
-      {
-        fromTime: startTime,
-        toTime: endTime
-      }
-    ]
-  );
+  return [];
 };
 
 export {
