@@ -33,8 +33,36 @@ const makeHoursArray = (startTime, endTime) => {
   return hours;
 };
 
+const lessOrEqual = (time1, time2) => time1 - time2 <= 0;
+const greater = (time1, time2) => !lessOrEqual(time1, time2); 
+
 const calcFreeTimes = (startTime, endTime, eventsTimes) => {
-  return [];
+  if (eventsTimes.length === 0) {
+    return [{
+      fromTime: startTime,
+      toTime: endTime
+    }]
+  } else {
+    const event = eventsTimes[0];
+    if (lessOrEqual(event.fromTime, startTime) && lessOrEqual(endTime, event.toTime)) {
+      return []
+    } else {
+      const freeTimes = [];
+      if (greater(event.fromTime, startTime)) {
+        freeTimes.push({
+          fromTime: startTime,
+          toTime: event.fromTime
+        })
+      }
+      if (greater(endTime, event.toTime)) {
+        freeTimes.push({
+          fromTime: event.toTime,
+          toTime: endTime
+        })
+      }
+      return freeTimes;
+    }
+  }
 };
 
 export {
