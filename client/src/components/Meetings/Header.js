@@ -1,28 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { TimeLineHeight } from './constants';
+import { HeaderHeight, SideWidth } from './constants';
 import DateSelector from './DateSelector';
-import Time from './Time';
+import TimeLine from './TimeLine';
 
-const TimeLineDate = styled(DateSelector)`
-  width: 245px;
+const HeaderDate = styled(DateSelector)`
+  width: ${SideWidth};
+  height: 100%;
   padding: 0 24px;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
 `;
 
-const TimeLine = ({ className }) => (
-  <div className={className}>
-    <TimeLineDate />
-    <Time />
-  </div>
+const Header = ({ className, startTime, endTime }) => (
+  <header className={className}>
+    <HeaderDate />
+    <TimeLine startTime={startTime} endTime={endTime} />
+  </header>
 );
 
-export default styled(TimeLine)`
-  height: ${TimeLineHeight};
-  background: #fff;
-  box-shadow: 0 -1px 0 0 #e9ecef;
+export default styled(Header)`
   display: flex;
+  height: ${HeaderHeight};
+  background: #fff;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
 `;

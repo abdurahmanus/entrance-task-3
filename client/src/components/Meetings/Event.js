@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { calcPosition, toPosition } from './calcPosition';
+import {fromDate, percentFromStart, percentFromEnd} from './timeUtils';
 
-const Event = ({ className, from, to }) => (
+const Event = ({ className, dateStart, dateEnd, startTime, endTime }) => (
   <div
     className={className}
     style={{
-      left: calcPosition(from.getHours(), from.getMinutes()) + '%',
-      right: toPosition(to.getHours(), to.getMinutes()) + `%`
+      left: percentFromStart(startTime, endTime, fromDate(dateStart)) + '%',
+      right: percentFromEnd(startTime, endTime, fromDate(dateEnd)) + `%`
     }}
   />
 );

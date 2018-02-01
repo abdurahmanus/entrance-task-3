@@ -2,26 +2,35 @@ import React from 'react';
 import styled from 'styled-components';
 import EmptySlot from './EmptySlot';
 import Event from './Event';
+import { fromDate, calcFreeTimes } from './timeUtils';
 
-// todo: расчет интервалов, когда нет событий
-const calcEmptySlotsTimes = events => {
-  return [
-    {
-      dateStart: new Date(2017, 11, 3, 7, 31, 0, 0),
-      dateEnd: new Date(2017, 11, 3, 12, 41, 0, 0)
-    }
-  ];
-};
+const RoomEvents = ({ className, events, startTime, endTime }) => {
+  const eventsTimes = events.map(e => ({
+    fromTime: fromDate(e.dateStart),
+    toTime: fromDate(e.dateEnd)
+  }));
 
-const RoomEvents = ({ className, events }) => {
-  const emptySlots = calcEmptySlotsTimes(events);
+  const freeTimes = calcFreeTimes(startTime, endTime, eventsTimes);
+
   return (
     <div className={className}>
-      {emptySlots.map((es, index) => (
-        <EmptySlot key={index} from={es.dateStart} to={es.dateEnd} />
+      {freeTimes.map((ft, index) => (
+        <EmptySlot
+          key={index}
+          startTime={startTime}
+          endTime={endTime}
+          fromTime={ft.fromTime}
+          toTime={ft.toTime}
+        />
       ))}
       {events.map(evt => (
-        <Event key={evt.id} from={evt.dateStart} to={evt.dateEnd} />
+        <Event
+          key={evt.id}
+          dateStart={evt.dateStart}
+          dateEnd={evt.dateEnd}
+          startTime={startTime}
+          endTime={endTime}
+        />
       ))}
     </div>
   );

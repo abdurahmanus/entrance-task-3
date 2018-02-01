@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import Background from './Background';
+import { fromTime } from './timeUtils';
 import Header from './Header';
 import Body from './Body';
 
@@ -49,11 +48,13 @@ const floors = [
   }
 ];
 
+const startTime = fromTime(7, 31)
+const endTime = fromTime(23, 12);
+
 const Meetings = ({ className }) => (
   <div className={className}>
-    <Background />
-    <Header />
-    <Body floors={floors} />
+    <Header startTime={startTime} endTime={endTime} />
+    <Body floors={floors} startTime={startTime} endTime={endTime} />
   </div>
 );
 
@@ -61,4 +62,16 @@ export default styled(Meetings)`
   height: calc(100vh - 71px);
   position: relative;
   font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
+  background: #f6f7f9;
+  :before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 245px;
+    background: #ffffff;
+    border-right: 1px solid #e9ecef;
+    box-sizing: border-box;
+  }
 `;

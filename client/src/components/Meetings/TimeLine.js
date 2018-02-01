@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import { calcPosition } from './calcPosition';
+import { makeHoursArray, percentFromStart } from './timeUtils';
 
 const Label = styled.span`
   position: absolute;
@@ -14,15 +13,20 @@ const Label = styled.span`
   top: 17px;
 `;
 
-const Time = ({ className }) => (
+const TimeLine = ({ className, startTime, endTime }) => (
   <div className={className}>
-    {[8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23].map((h, index) => (
-        <Label key={index} style={{left: calcPosition(h, 0) + "%"}}>{h}</Label>
+    {makeHoursArray(startTime, endTime).map((h, index) => (
+      <Label
+        key={index}
+        style={{ left: percentFromStart(startTime, endTime, h) + '%' }}
+      >
+        {h.getHours()}
+      </Label>
     ))}
   </div>
 );
 
-export default styled(Time)`
+export default styled(TimeLine)`
   flex-grow: 1;
   background: #fff;
   position: relative;

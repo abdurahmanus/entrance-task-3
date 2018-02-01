@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { calcPosition, toPosition } from './calcPosition';
+import { percentFromStart, percentFromEnd } from './timeUtils';
 
 const AddEvent = styled.button`
   width: 57px;
@@ -34,14 +34,19 @@ class EmptySlot extends Component {
   }
 
   render() {
-    const { className, from, to } = this.props;
+    // не путать fromTime и startTime, а так же toTime и endTime
+    // startTime и endTime - общий интервал
+    // fromTime и toTime - интервал отсутствия событий (т.е. пустого слота)
+    const { className, fromTime, toTime, startTime, endTime } = this.props;
     return (
       <div
         className={className}
-        style={{
-          left: calcPosition(from.getHours(), from.getMinutes()) + '%',
-          right: toPosition(to.getHours(), to.getMinutes()) + `%`
-        }}
+        style={
+          {
+            left: percentFromStart(startTime, endTime, fromTime) + '%',
+            right: percentFromEnd(startTime, endTime, toTime) + `%`
+          }
+        }
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
       >
