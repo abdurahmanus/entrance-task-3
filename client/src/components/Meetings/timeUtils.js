@@ -36,6 +36,7 @@ const makeHoursArray = (startTime, endTime) => {
 const lessOrEqual = (time1, time2) => time1 - time2 <= 0;
 const greater = (time1, time2) => !lessOrEqual(time1, time2); 
 
+// todo: refactor
 const calcFreeTimes = (startTime, endTime, eventsTimes) => {
   if (eventsTimes.length === 0) {
     return [{
