@@ -3,15 +3,10 @@ import styled from 'styled-components';
 import { HeaderHeight } from './constants';
 import Floor from './Floor';
 
-const Body = ({ className, floors, dayTimeStart, dayTimeEnd }) => (
+const Body = ({ className, floors, dayInterval }) => (
   <div className={className}>
     {floors.map(floor => (
-      <Floor
-        key={floor.floor}
-        data={floor}
-        dayTimeStart={dayTimeStart}
-        dayTimeEnd={dayTimeEnd}
-      />
+      <Floor key={floor.floor} data={floor} dayInterval={dayInterval} />
     ))}
   </div>
 );

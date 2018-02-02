@@ -1,29 +1,26 @@
-import { createFromTime, calcFreeTimes } from './timeUtils';
+import { createInterval, createFromTime, calcFreeTimes } from './timeUtils';
 
 describe('calcFreeTimes', () => {
   it('no events', () => {
     const eventsTimes = [];
     const freeTimes = calcFreeTimes(
-      createFromTime(8, 0),
-      createFromTime(10, 0),
+      createFromTime(8),
+      createFromTime(10),
       eventsTimes
     );
     expect(freeTimes).toEqual([
-      {
-        timeStart: createFromTime(8, 0),
-        timeEnd: createFromTime(10, 0)
-      }
+      createInterval(createFromTime(8), createFromTime(10))
     ]);
   });
 
   describe('one event', () => {
     it('starts from Start end ends to End', () => {
       const eventsTimes = [
-        { timeStart: createFromTime(8, 0), timeEnd: createFromTime(10, 0) }
+        createInterval(createFromTime(8), createFromTime(10))
       ];
       const freeTimes = calcFreeTimes(
-        createFromTime(8, 0),
-        createFromTime(10, 0),
+        createFromTime(8),
+        createFromTime(10),
         eventsTimes
       );
       expect(freeTimes).toEqual([]);
@@ -31,32 +28,26 @@ describe('calcFreeTimes', () => {
 
     it('somewhere between Start and End', () => {
       const eventsTimes = [
-        { timeStart: createFromTime(9, 0), timeEnd: createFromTime(9, 30) }
+        createInterval(createFromTime(9), createFromTime(9, 30))
       ];
       const freeTimes = calcFreeTimes(
-        createFromTime(8, 0),
-        createFromTime(10, 0),
+        createFromTime(8),
+        createFromTime(10),
         eventsTimes
       );
       expect(freeTimes).toEqual([
-        {
-          timeStart: createFromTime(8, 0),
-          timeEnd: createFromTime(9, 0)
-        },
-        {
-          timeStart: createFromTime(9, 30),
-          timeEnd: createFromTime(10, 0)
-        }
+        createInterval(createFromTime(8), createFromTime(9)),
+        createInterval(createFromTime(9, 30), createFromTime(10))
       ]);
     });
 
     it('starts before Start and ends after End', () => {
       const eventsTimes = [
-        { timeStart: createFromTime(7, 59), timeEnd: createFromTime(10, 1) }
+        createInterval(createFromTime(7, 59), createFromTime(10, 1))
       ];
       const freeTimes = calcFreeTimes(
-        createFromTime(8, 0),
-        createFromTime(10, 0),
+        createFromTime(8),
+        createFromTime(10),
         eventsTimes
       );
       expect(freeTimes).toEqual([]);
@@ -64,11 +55,11 @@ describe('calcFreeTimes', () => {
 
     it('starts before Start end ends to End', () => {
       const eventsTimes = [
-        { timeStart: createFromTime(7, 59), timeEnd: createFromTime(10, 0) }
+        createInterval(createFromTime(7, 59), createFromTime(10))
       ];
       const freeTimes = calcFreeTimes(
-        createFromTime(8, 0),
-        createFromTime(10, 0),
+        createFromTime(8),
+        createFromTime(10),
         eventsTimes
       );
       expect(freeTimes).toEqual([]);
@@ -76,28 +67,25 @@ describe('calcFreeTimes', () => {
 
     it('starts before Start and ends between Start and End', () => {
       const eventsTimes = [
-        { timeStart: createFromTime(7, 59), timeEnd: createFromTime(9, 30) }
+        createInterval(createFromTime(7, 59), createFromTime(9, 30))
       ];
       const freeTimes = calcFreeTimes(
-        createFromTime(8, 0),
-        createFromTime(10, 0),
+        createFromTime(8),
+        createFromTime(10),
         eventsTimes
       );
       expect(freeTimes).toEqual([
-        {
-          timeStart: createFromTime(9, 30),
-          timeEnd: createFromTime(10, 0)
-        }
+        createInterval(createFromTime(9, 30), createFromTime(10))
       ]);
     });
 
     it('starts from Start end ends after End', () => {
       const eventsTimes = [
-        { timeStart: createFromTime(8, 0), timeEnd: createFromTime(10, 1) }
+        createInterval(createFromTime(8), createFromTime(10, 1))
       ];
       const freeTimes = calcFreeTimes(
-        createFromTime(8, 0),
-        createFromTime(10, 0),
+        createFromTime(8),
+        createFromTime(10),
         eventsTimes
       );
       expect(freeTimes).toEqual([]);
@@ -105,22 +93,17 @@ describe('calcFreeTimes', () => {
 
     it('starts between Start and End and ends after End', () => {
       const eventsTimes = [
-        { timeStart: createFromTime(8, 1), timeEnd: createFromTime(10, 1) }
+        createInterval(createFromTime(8, 1), createFromTime(10, 1))
       ];
       const freeTimes = calcFreeTimes(
-        createFromTime(8, 0),
-        createFromTime(10, 0),
+        createFromTime(8),
+        createFromTime(10),
         eventsTimes
       );
       expect(freeTimes).toEqual([
-        {
-          timeStart: createFromTime(8, 0),
-          timeEnd: createFromTime(8, 1)
-        }
+        createInterval(createFromTime(8), createFromTime(8, 1))
       ]);
     });
-
-    
   });
 
   // describe('two events', () => {

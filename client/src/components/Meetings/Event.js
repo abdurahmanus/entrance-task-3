@@ -2,15 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { createFromDate, percentFromStart, percentFromEnd } from './timeUtils';
 
-const Event = ({ className, dateStart, dateEnd, dayTimeStart, dayTimeEnd }) => (
+const Event = ({ className, dateStart, dateEnd, dayInterval }) => (
   <div
     className={className}
     style={{
-      left:
-        percentFromStart(dayTimeStart, dayTimeEnd, createFromDate(dateStart)) +
-        '%',
-      right:
-        percentFromEnd(dayTimeStart, dayTimeEnd, createFromDate(dateEnd)) + `%`
+      left: percentFromStart(dayInterval, createFromDate(dateStart)) + '%',
+      right: percentFromEnd(dayInterval, createFromDate(dateEnd)) + `%`
     }}
   />
 );

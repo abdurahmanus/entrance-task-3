@@ -1,31 +1,50 @@
-// todo incapsulate time and interval
+const createInterval = (timeStart, timeEnd) => {
+  if (
+    !(
+      Object.prototype.toString.call(timeStart) === '[object Date]' &&
+      Object.prototype.toString.call(timeEnd) === '[object Date]'
+    )
+  ) {
+    throw new Error('invalid times provided');
+  }
+  return {
+    timeStart,
+    timeEnd
+  };
+};
 
 const createFromDate = date => {
+  if (Object.prototype.toString.call(date) !== '[object Date]') {
+    throw new Error('invalid date provided');
+  }
+
   const fromTheBeginning = new Date(0);
   fromTheBeginning.setHours(date.getHours());
   fromTheBeginning.setMinutes(date.getMinutes());
   return fromTheBeginning;
 };
 
-const createFromTime = (hours, minutes) => {
+const createFromTime = (hours, minutes = 0) => {
   return createFromDate(new Date(1970, 0, 1, hours, minutes, 0, 0));
 };
 
 const minutesCount = time => time.getHours() * 60 + time.getMinutes();
 
-const percentFromStart = (startTime, endTime, time) => {
-  const minutesFromStart = minutesCount(time) - minutesCount(startTime);
-  const totalMinutes = minutesCount(endTime) - minutesCount(startTime);
+const percentFromStart = (interval, time) => {
+  const { timeStart, timeEnd } = interval;
+  const minutesFromStart = minutesCount(time) - minutesCount(timeStart);
+  const totalMinutes = minutesCount(timeEnd) - minutesCount(timeStart);
   return minutesFromStart / totalMinutes * 100;
 };
 
-const percentFromEnd = (startTime, endTime, time) => {
-  return 100 - percentFromStart(startTime, endTime, time);
+const percentFromEnd = (interval, time) => {
+  return 100 - percentFromStart(interval, time);
 };
 
-const makeHoursArray = (startTime, endTime) => {
+const makeHoursArray = interval => {
+  const { timeStart, timeEnd } = interval;
   const hours = [];
-  for (let h = startTime.getHours() + 1; h <= endTime.getHours(); h++) {
+  for (let h = timeStart.getHours() + 1; h <= timeEnd.getHours(); h++) {
     hours.push(createFromTime(h, 0));
   }
   return hours;
@@ -37,32 +56,21 @@ const greater = (time1, time2) => !lessOrEqual(time1, time2);
 // todo: refactor
 const calcFreeTimes = (dayTimeStart, dayTimeEnd, eventsTimes) => {
   if (eventsTimes.length === 0) {
-    return [
-      {
-        timeStart: dayTimeStart,
-        timeEnd: dayTimeEnd
-      }
-    ];
+    return [createInterval(dayTimeStart, dayTimeEnd)];
   }
-  const event = eventsTimes[0];
+  const { timeStart, timeEnd } = eventsTimes[0];
   if (
-    lessOrEqual(event.timeStart, dayTimeStart) &&
-    lessOrEqual(dayTimeEnd, event.timeEnd)
+    lessOrEqual(timeStart, dayTimeStart) &&
+    lessOrEqual(dayTimeEnd, timeEnd)
   ) {
     return [];
   } else {
     const freeTimes = [];
-    if (greater(event.timeStart, dayTimeStart)) {
-      freeTimes.push({
-        timeStart: dayTimeStart,
-        timeEnd: event.timeStart
-      });
+    if (greater(timeStart, dayTimeStart)) {
+      freeTimes.push(createInterval(dayTimeStart, timeStart));
     }
-    if (greater(dayTimeEnd, event.timeEnd)) {
-      freeTimes.push({
-        timeStart: event.timeEnd,
-        timeEnd: dayTimeEnd
-      });
+    if (greater(dayTimeEnd, timeEnd)) {
+      freeTimes.push(createInterval(timeEnd, dayTimeEnd));
     }
     return freeTimes;
   }
@@ -71,6 +79,7 @@ const calcFreeTimes = (dayTimeStart, dayTimeEnd, eventsTimes) => {
 export {
   createFromDate,
   createFromTime,
+  createInterval,
   percentFromStart,
   percentFromEnd,
   makeHoursArray,

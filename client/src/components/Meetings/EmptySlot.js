@@ -34,16 +34,14 @@ class EmptySlot extends Component {
   }
 
   render() {
-    const { className, timeStart, timeEnd, dayTimeStart, dayTimeEnd } = this.props;
+    const { className, timeStart, timeEnd, dayInterval } = this.props;
     return (
       <div
         className={className}
-        style={
-          {
-            left: percentFromStart(dayTimeStart, dayTimeEnd, timeStart) + '%',
-            right: percentFromEnd(dayTimeStart, dayTimeEnd, timeEnd) + `%`
-          }
-        }
+        style={{
+          left: percentFromStart(dayInterval, timeStart) + '%',
+          right: percentFromEnd(dayInterval, timeEnd) + `%`
+        }}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
       >

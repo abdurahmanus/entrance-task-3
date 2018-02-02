@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { createFromTime } from './timeUtils';
+import { createInterval, createFromTime } from './timeUtils';
 import Header from './Header';
 import Body from './Body';
 
@@ -50,11 +50,12 @@ const floors = [
 
 const dayTimeStart = createFromTime(7, 31)
 const dayTimeEnd = createFromTime(23, 12);
+const dayInterval = createInterval(dayTimeStart, dayTimeEnd);
 
 const Meetings = ({ className }) => (
   <div className={className}>
-    <Header dayTimeStart={dayTimeStart} dayTimeEnd={dayTimeEnd} />
-    <Body floors={floors} dayTimeStart={dayTimeStart} dayTimeEnd={dayTimeEnd} />
+    <Header dayInterval={dayInterval} />
+    <Body floors={floors} dayInterval={dayInterval} />
   </div>
 );
 
