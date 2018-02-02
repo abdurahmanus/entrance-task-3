@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import Header from './components/Header';
 import Meetings from './components/Meetings';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <Meetings />
-      </div>
-    );
-  }
-}
+const headerHeight = "71px";
+
+const AppHeader = styled(Header)`
+  height: ${headerHeight};
+`;
+
+const AppMeetings = styled(Meetings)`
+  height: calc(100vh - ${headerHeight});
+`;
+
+const App = ({ className }) => (
+  <div className={className}>
+    <AppHeader />
+    <AppMeetings />
+  </div>
+);
 
 export default App;

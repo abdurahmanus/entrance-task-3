@@ -60,9 +60,8 @@ const Meetings = ({ className }) => (
 );
 
 export default styled(Meetings)`
-  height: calc(100vh - 71px);
   position: relative;
-  font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   background: #f6f7f9;
   :before {
     content: '';

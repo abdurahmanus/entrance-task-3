@@ -24,10 +24,7 @@ const Header = ({ className }) => (
   </header>
 );
 
-const StyledHeader = styled(Header)`
-  height: 71px;
+export default styled(Header)`
   background: #fff;
   position: relative;
 `;
-
-export default StyledHeader;

@@ -14,7 +14,7 @@ export default styled(Button)`
   font-size: 13px;
   line-height: 16px;
   letter-spacing: 0;
-  font-family: HelveticaNeue, Helvetica, Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   cursor: pointer;
   &:hover {
     background: #0059ff;

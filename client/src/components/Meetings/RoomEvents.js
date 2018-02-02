@@ -5,8 +5,20 @@ import Event from './Event';
 import {
   createInterval,
   createFromDate,
-  calcVacantIntervals
+  calcVacantIntervals,
+  percentFromStart,
+  percentFromEnd
 } from './timeUtils';
+
+const EventWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: ${({ dayInterval, interval }) =>
+    percentFromStart(dayInterval, interval.timeStart) + '%'};
+  right: ${({ dayInterval, interval }) =>
+    percentFromEnd(dayInterval, interval.timeEnd) + '%'};
+`;
 
 const RoomEvents = ({ className, events, dayInterval }) => {
   const eventsIntervals = events.map(e =>
@@ -16,15 +28,21 @@ const RoomEvents = ({ className, events, dayInterval }) => {
   return (
     <div className={className}>
       {vacantIntervals.map((interval, index) => (
-        <NoEvents key={index} dayInterval={dayInterval} interval={interval} />
+        <EventWrapper key={index} dayInterval={dayInterval} interval={interval}>
+          <NoEvents />
+        </EventWrapper>
       ))}
       {events.map(evt => (
-        <Event
+        <EventWrapper
           key={evt.id}
-          dateStart={evt.dateStart}
-          dateEnd={evt.dateEnd}
           dayInterval={dayInterval}
-        />
+          interval={createInterval(
+            createFromDate(evt.dateStart),
+            createFromDate(evt.dateEnd)
+          )}
+        >
+          <Event dateStart={evt.dateStart} dateEnd={evt.dateEnd} />
+        </EventWrapper>
       ))}
     </div>
   );
