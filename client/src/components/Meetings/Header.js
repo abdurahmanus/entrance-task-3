@@ -12,10 +12,10 @@ const HeaderDate = styled(DateSelector)`
   box-sizing: border-box;
 `;
 
-const Header = ({ className, startTime, endTime }) => (
+const Header = ({ className, dayTimeStart, dayTimeEnd }) => (
   <header className={className}>
     <HeaderDate />
-    <TimeLine startTime={startTime} endTime={endTime} />
+    <TimeLine dayTimeStart={dayTimeStart} dayTimeEnd={dayTimeEnd} />
   </header>
 );
 

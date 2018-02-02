@@ -13,12 +13,12 @@ const Label = styled.span`
   top: 17px;
 `;
 
-const TimeLine = ({ className, startTime, endTime }) => (
+const TimeLine = ({ className, dayTimeStart, dayTimeEnd }) => (
   <div className={className}>
-    {makeHoursArray(startTime, endTime).map((h, index) => (
+    {makeHoursArray(dayTimeStart, dayTimeEnd).map((h, index) => (
       <Label
         key={index}
-        style={{ left: percentFromStart(startTime, endTime, h) + '%' }}
+        style={{ left: percentFromStart(dayTimeStart, dayTimeEnd, h) + '%' }}
       >
         {h.getHours()}
       </Label>

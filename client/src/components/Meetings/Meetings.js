@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { fromTime } from './timeUtils';
+import { createFromTime } from './timeUtils';
 import Header from './Header';
 import Body from './Body';
 
@@ -48,13 +48,13 @@ const floors = [
   }
 ];
 
-const startTime = fromTime(7, 31)
-const endTime = fromTime(23, 12);
+const dayTimeStart = createFromTime(7, 31)
+const dayTimeEnd = createFromTime(23, 12);
 
 const Meetings = ({ className }) => (
   <div className={className}>
-    <Header startTime={startTime} endTime={endTime} />
-    <Body floors={floors} startTime={startTime} endTime={endTime} />
+    <Header dayTimeStart={dayTimeStart} dayTimeEnd={dayTimeEnd} />
+    <Body floors={floors} dayTimeStart={dayTimeStart} dayTimeEnd={dayTimeEnd} />
   </div>
 );
 

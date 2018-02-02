@@ -1,16 +1,14 @@
-const fromDate = date => {
+// todo incapsulate time and interval
+
+const createFromDate = date => {
   const fromTheBeginning = new Date(0);
   fromTheBeginning.setHours(date.getHours());
   fromTheBeginning.setMinutes(date.getMinutes());
   return fromTheBeginning;
 };
 
-const fromTime = (hours, minutes) => {
-  return fromDate(new Date(1970, 0, 1, hours, minutes, 0, 0));
-};
-
-const fromString = dateString => {
-  return fromDate(new Date(dateString));
+const createFromTime = (hours, minutes) => {
+  return createFromDate(new Date(1970, 0, 1, hours, minutes, 0, 0));
 };
 
 const minutesCount = time => time.getHours() * 60 + time.getMinutes();
@@ -28,48 +26,51 @@ const percentFromEnd = (startTime, endTime, time) => {
 const makeHoursArray = (startTime, endTime) => {
   const hours = [];
   for (let h = startTime.getHours() + 1; h <= endTime.getHours(); h++) {
-    hours.push(fromDate(new Date(1970, 0, 1, h, 0, 0, 0)));
+    hours.push(createFromTime(h, 0));
   }
   return hours;
 };
 
 const lessOrEqual = (time1, time2) => time1 - time2 <= 0;
-const greater = (time1, time2) => !lessOrEqual(time1, time2); 
+const greater = (time1, time2) => !lessOrEqual(time1, time2);
 
 // todo: refactor
-const calcFreeTimes = (startTime, endTime, eventsTimes) => {
+const calcFreeTimes = (dayTimeStart, dayTimeEnd, eventsTimes) => {
   if (eventsTimes.length === 0) {
-    return [{
-      fromTime: startTime,
-      toTime: endTime
-    }]
+    return [
+      {
+        timeStart: dayTimeStart,
+        timeEnd: dayTimeEnd
+      }
+    ];
+  }
+  const event = eventsTimes[0];
+  if (
+    lessOrEqual(event.timeStart, dayTimeStart) &&
+    lessOrEqual(dayTimeEnd, event.timeEnd)
+  ) {
+    return [];
   } else {
-    const event = eventsTimes[0];
-    if (lessOrEqual(event.fromTime, startTime) && lessOrEqual(endTime, event.toTime)) {
-      return []
-    } else {
-      const freeTimes = [];
-      if (greater(event.fromTime, startTime)) {
-        freeTimes.push({
-          fromTime: startTime,
-          toTime: event.fromTime
-        })
-      }
-      if (greater(endTime, event.toTime)) {
-        freeTimes.push({
-          fromTime: event.toTime,
-          toTime: endTime
-        })
-      }
-      return freeTimes;
+    const freeTimes = [];
+    if (greater(event.timeStart, dayTimeStart)) {
+      freeTimes.push({
+        timeStart: dayTimeStart,
+        timeEnd: event.timeStart
+      });
     }
+    if (greater(dayTimeEnd, event.timeEnd)) {
+      freeTimes.push({
+        timeStart: event.timeEnd,
+        timeEnd: dayTimeEnd
+      });
+    }
+    return freeTimes;
   }
 };
 
 export {
-  fromDate,
-  fromTime,
-  fromString,
+  createFromDate,
+  createFromTime,
   percentFromStart,
   percentFromEnd,
   makeHoursArray,

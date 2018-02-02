@@ -13,11 +13,11 @@ const FloorName = styled.div`
   margin-bottom: 4px;
 `;
 
-const Floor = ({ className, data, startTime, endTime }) => (
+const Floor = ({ className, data, dayTimeStart, dayTimeEnd }) => (
   <div className={className}>
     <FloorName>{data.floor} этаж</FloorName>
     {data.rooms.map(room => (
-      <Room key={room.id} data={room} startTime={startTime} endTime={endTime} />
+      <Room key={room.id} data={room} dayTimeStart={dayTimeStart} dayTimeEnd={dayTimeEnd} />
     ))}
   </div>
 );

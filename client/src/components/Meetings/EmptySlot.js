@@ -34,17 +34,14 @@ class EmptySlot extends Component {
   }
 
   render() {
-    // не путать fromTime и startTime, а так же toTime и endTime
-    // startTime и endTime - общий интервал
-    // fromTime и toTime - интервал отсутствия событий (т.е. пустого слота)
-    const { className, fromTime, toTime, startTime, endTime } = this.props;
+    const { className, timeStart, timeEnd, dayTimeStart, dayTimeEnd } = this.props;
     return (
       <div
         className={className}
         style={
           {
-            left: percentFromStart(startTime, endTime, fromTime) + '%',
-            right: percentFromEnd(startTime, endTime, toTime) + `%`
+            left: percentFromStart(dayTimeStart, dayTimeEnd, timeStart) + '%',
+            right: percentFromEnd(dayTimeStart, dayTimeEnd, timeEnd) + `%`
           }
         }
         onMouseOver={this.onMouseOver}

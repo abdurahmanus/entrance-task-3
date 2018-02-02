@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import RoomInfo from './RoomInfo';
 import RoomEvents from './RoomEvents';
 
-const Room = ({ className, data, startTime, endTime }) => (
+const Room = ({ className, data, dayTimeStart, dayTimeEnd }) => (
   <div className={className}>
     <RoomInfo title={data.title} capacity={data.capacity} />
-    <RoomEvents events={data.events} startTime={startTime} endTime={endTime} />
+    <RoomEvents
+      events={data.events}
+      dayTimeStart={dayTimeStart}
+      dayTimeEnd={dayTimeEnd}
+    />
   </div>
 );
 
