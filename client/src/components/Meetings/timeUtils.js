@@ -54,25 +54,25 @@ const lessOrEqual = (time1, time2) => time1 - time2 <= 0;
 const greater = (time1, time2) => !lessOrEqual(time1, time2);
 
 // todo: refactor
-const calcFreeTimes = (dayTimeStart, dayTimeEnd, eventsTimes) => {
-  if (eventsTimes.length === 0) {
-    return [createInterval(dayTimeStart, dayTimeEnd)];
+const calcVacantIntervals = (dayInterval, eventsIntervals) => {
+  if (eventsIntervals.length === 0) {
+    return [dayInterval];
   }
-  const { timeStart, timeEnd } = eventsTimes[0];
+  const { timeStart, timeEnd } = eventsIntervals[0];
   if (
-    lessOrEqual(timeStart, dayTimeStart) &&
-    lessOrEqual(dayTimeEnd, timeEnd)
+    lessOrEqual(timeStart, dayInterval.timeStart) &&
+    lessOrEqual(dayInterval.timeEnd, timeEnd)
   ) {
     return [];
   } else {
-    const freeTimes = [];
-    if (greater(timeStart, dayTimeStart)) {
-      freeTimes.push(createInterval(dayTimeStart, timeStart));
+    const vacantIntervals = [];
+    if (greater(timeStart, dayInterval.timeStart)) {
+      vacantIntervals.push(createInterval(dayInterval.timeStart, timeStart));
     }
-    if (greater(dayTimeEnd, timeEnd)) {
-      freeTimes.push(createInterval(timeEnd, dayTimeEnd));
+    if (greater(dayInterval.timeEnd, timeEnd)) {
+      vacantIntervals.push(createInterval(timeEnd, dayInterval.timeEnd));
     }
-    return freeTimes;
+    return vacantIntervals;
   }
 };
 
@@ -83,5 +83,5 @@ export {
   percentFromStart,
   percentFromEnd,
   makeHoursArray,
-  calcFreeTimes
+  calcVacantIntervals
 };

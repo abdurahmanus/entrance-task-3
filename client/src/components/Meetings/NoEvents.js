@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { percentFromStart, percentFromEnd } from './timeUtils';
 
-const AddEvent = styled.button`
+const AddEventButton = styled.button`
   width: 57px;
   height: 28px;
   border: none;
@@ -15,7 +15,7 @@ const AddEvent = styled.button`
   font-weight: bold;
 `;
 
-class EmptySlot extends Component {
+class NoEvents extends Component {
   constructor() {
     super();
     this.state = {
@@ -34,30 +34,30 @@ class EmptySlot extends Component {
   }
 
   render() {
-    const { className, timeStart, timeEnd, dayInterval } = this.props;
+    const { className, interval, dayInterval } = this.props;
     return (
       <div
         className={className}
         style={{
-          left: percentFromStart(dayInterval, timeStart) + '%',
-          right: percentFromEnd(dayInterval, timeEnd) + `%`
+          left: percentFromStart(dayInterval, interval.timeStart) + '%',
+          right: percentFromEnd(dayInterval, interval.timeEnd) + `%`
         }}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
       >
-        <AddEvent
+        <AddEventButton
           style={{
             display: this.state.hovered ? 'block' : 'none'
           }}
         >
           +
-        </AddEvent>
+        </AddEventButton>
       </div>
     );
   }
 }
 
-export default styled(EmptySlot)`
+export default styled(NoEvents)`
   position: absolute;
   background: #fff;
   top: 0;

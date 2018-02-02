@@ -1,29 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-import EmptySlot from './EmptySlot';
+import NoEvents from './NoEvents';
 import Event from './Event';
-import { createInterval, createFromDate, calcFreeTimes } from './timeUtils';
+import {
+  createInterval,
+  createFromDate,
+  calcVacantIntervals
+} from './timeUtils';
 
 const RoomEvents = ({ className, events, dayInterval }) => {
-  const eventsTimes = events.map(e =>
+  const eventsIntervals = events.map(e =>
     createInterval(createFromDate(e.dateStart), createFromDate(e.dateEnd))
   );
-
-  const freeTimes = calcFreeTimes(
-    dayInterval.timeStart,
-    dayInterval.timeEnd,
-    eventsTimes
-  );
-
+  const vacantIntervals = calcVacantIntervals(dayInterval, eventsIntervals);
   return (
     <div className={className}>
-      {freeTimes.map((ft, index) => (
-        <EmptySlot
-          key={index}
-          dayInterval={dayInterval}
-          timeStart={ft.timeStart}
-          timeEnd={ft.timeEnd}
-        />
+      {vacantIntervals.map((interval, index) => (
+        <NoEvents key={index} dayInterval={dayInterval} interval={interval} />
       ))}
       {events.map(evt => (
         <Event

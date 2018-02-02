@@ -1,11 +1,10 @@
-import { createInterval, createFromTime, calcFreeTimes } from './timeUtils';
+import { createInterval, createFromTime, calcVacantIntervals } from './timeUtils';
 
-describe('calcFreeTimes', () => {
+describe('calcVacantIntervals', () => {
   it('no events', () => {
     const eventsTimes = [];
-    const freeTimes = calcFreeTimes(
-      createFromTime(8),
-      createFromTime(10),
+    const freeTimes = calcVacantIntervals(
+      createInterval(createFromTime(8), createFromTime(10)),
       eventsTimes
     );
     expect(freeTimes).toEqual([
@@ -18,9 +17,8 @@ describe('calcFreeTimes', () => {
       const eventsTimes = [
         createInterval(createFromTime(8), createFromTime(10))
       ];
-      const freeTimes = calcFreeTimes(
-        createFromTime(8),
-        createFromTime(10),
+      const freeTimes = calcVacantIntervals(
+        createInterval(createFromTime(8), createFromTime(10)),
         eventsTimes
       );
       expect(freeTimes).toEqual([]);
@@ -30,9 +28,8 @@ describe('calcFreeTimes', () => {
       const eventsTimes = [
         createInterval(createFromTime(9), createFromTime(9, 30))
       ];
-      const freeTimes = calcFreeTimes(
-        createFromTime(8),
-        createFromTime(10),
+      const freeTimes = calcVacantIntervals(
+        createInterval(createFromTime(8), createFromTime(10)),
         eventsTimes
       );
       expect(freeTimes).toEqual([
@@ -45,9 +42,8 @@ describe('calcFreeTimes', () => {
       const eventsTimes = [
         createInterval(createFromTime(7, 59), createFromTime(10, 1))
       ];
-      const freeTimes = calcFreeTimes(
-        createFromTime(8),
-        createFromTime(10),
+      const freeTimes = calcVacantIntervals(
+        createInterval(createFromTime(8), createFromTime(10)),
         eventsTimes
       );
       expect(freeTimes).toEqual([]);
@@ -57,9 +53,8 @@ describe('calcFreeTimes', () => {
       const eventsTimes = [
         createInterval(createFromTime(7, 59), createFromTime(10))
       ];
-      const freeTimes = calcFreeTimes(
-        createFromTime(8),
-        createFromTime(10),
+      const freeTimes = calcVacantIntervals(
+        createInterval(createFromTime(8), createFromTime(10)),
         eventsTimes
       );
       expect(freeTimes).toEqual([]);
@@ -69,9 +64,8 @@ describe('calcFreeTimes', () => {
       const eventsTimes = [
         createInterval(createFromTime(7, 59), createFromTime(9, 30))
       ];
-      const freeTimes = calcFreeTimes(
-        createFromTime(8),
-        createFromTime(10),
+      const freeTimes = calcVacantIntervals(
+        createInterval(createFromTime(8), createFromTime(10)),
         eventsTimes
       );
       expect(freeTimes).toEqual([
@@ -83,9 +77,8 @@ describe('calcFreeTimes', () => {
       const eventsTimes = [
         createInterval(createFromTime(8), createFromTime(10, 1))
       ];
-      const freeTimes = calcFreeTimes(
-        createFromTime(8),
-        createFromTime(10),
+      const freeTimes = calcVacantIntervals(
+        createInterval(createFromTime(8), createFromTime(10)),
         eventsTimes
       );
       expect(freeTimes).toEqual([]);
@@ -95,9 +88,8 @@ describe('calcFreeTimes', () => {
       const eventsTimes = [
         createInterval(createFromTime(8, 1), createFromTime(10, 1))
       ];
-      const freeTimes = calcFreeTimes(
-        createFromTime(8),
-        createFromTime(10),
+      const freeTimes = calcVacantIntervals(
+        createInterval(createFromTime(8), createFromTime(10)),
         eventsTimes
       );
       expect(freeTimes).toEqual([
